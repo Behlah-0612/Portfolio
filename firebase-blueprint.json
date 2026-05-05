@@ -1,0 +1,41 @@
+{
+  "entities": {
+    "Message": {
+      "title": "Message",
+      "description": "A contact message sent from the portfolio website.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Sender's name"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Sender's email address"
+        },
+        "message": {
+          "type": "string",
+          "description": "The message content"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the message was sent"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["new", "read", "archived"],
+          "description": "Status of the message"
+        }
+      },
+      "required": ["name", "email", "message", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/messages/{messageId}": {
+      "schema": "Message",
+      "description": "Collection of contact messages."
+    }
+  }
+}

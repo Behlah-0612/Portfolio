@@ -1,0 +1,63 @@
+// ===============================================================
+// Assumed Data Model
+// ===============================================================
+//
+// Collection: messages
+// Document ID: auto-generated
+// Fields:
+//   - name: string (required, 1-100 chars) - Sender's name
+//   - email: string (required, valid email) - Sender's email
+//   - message: string (required, 1-5000 chars) - Message content
+//   - createdAt: timestamp (required) - Creation time
+//   - status: string (optional, enum: ['new', 'read', 'archived']) - Message status
+//
+// ===============================================================
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+    
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && 
+             (request.auth.token.email == "bkatleriwala@gmail.com" && request.auth.token.email_verified == true);
+    }
+
+    function isValidEmail(email) {
+      return email is string && email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+    }
+
+    function isValidMessage(data) {
+      return data.keys().hasAll(['name', 'email', 'message', 'createdAt']) &&
+             data.name is string && data.name.size() >= 1 && data.name.size() <= 100 &&
+             data.email is string && isValidEmail(data.email) &&
+             data.message is string && data.message.size() >= 1 && data.message.size() <= 5000 &&
+             data.createdAt is timestamp &&
+             (!('status' in data) || data.status in ['new', 'read', 'archived']);
+    }
+
+    // ===============================================================
+    // Rules
+    // ===============================================================
+
+    match /messages/{messageId} {
+      // Anyone can send a message, but it must be valid
+      allow create: if isValidMessage(request.resource.data);
+      
+      // Only the admin can read, update, or delete messages
+      allow read, update, delete: if isAdmin();
+    }
+
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

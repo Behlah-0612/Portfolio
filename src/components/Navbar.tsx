@@ -1,121 +1,160 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
-import { Menu, X } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { AnimatePresence, motion, useScroll, useSpring } from 'motion/react';
+import { Menu, X, FileText, Mail } from 'lucide-react';
+import { AnimatedWord, Emblem } from './BrandMark';
+import { EMAIL, RESUME_URL } from '../data/links';
 import { cn } from '@/src/lib/utils';
-import { Doodle, SketchyBorder, Hint } from './Sketchy';
 
-export function Navbar({ isModalOpen }: { 
-  isModalOpen?: boolean;
-}) {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { scrollY } = useScroll();
-  
-  const navItems = [
-    { name: 'About', id: 'about', pos: 'top-10 left-10', rotate: -5 },
-    { name: 'Projects', id: 'projects', pos: 'top-40 right-10', rotate: 3 },
-    { name: 'Timeline', id: 'experience', pos: 'top-[40%] left-4', rotate: -2 },
-    { name: 'Toolkit', id: 'skills', pos: 'top-[60%] right-4', rotate: 5 },
-    { name: 'OffScript', id: 'personal', pos: 'bottom-40 left-10', rotate: -3 },
-    { name: 'Contact', id: 'contact', pos: 'bottom-10 right-10', rotate: 2 },
-  ];
+const navItems = [
+  { name: 'About', id: 'about' },
+  { name: 'Projects', id: 'projects' },
+  { name: 'Experience', id: 'experience' },
+  { name: 'Skills', id: 'skills' },
+  { name: 'Beyond Code', id: 'personal' },
+  { name: 'Contact', id: 'contact' },
+];
+
+export function Navbar({ isModalOpen }: { isModalOpen?: boolean }) {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [brandVisible, setBrandVisible] = useState(false);
+  const [active, setActive] = useState<string>('');
+  const [waveKey, setWaveKey] = useState(0);
+  const { scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, { stiffness: 140, damping: 28, restDelta: 0.001 });
+
+  useEffect(() => {
+    const onScroll = () => {
+      setScrolled(window.scrollY > 24);
+      setBrandVisible(window.scrollY > 520);
+      // Highlight the section whose top has passed just under the bar.
+      let current = '';
+      for (const item of navItems) {
+        const el = document.getElementById(item.id);
+        if (el && el.getBoundingClientRect().top <= 120) current = item.id;
+      }
+      setActive(current);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  // The wordmark catches a wave of light each time the visitor moves to a new section.
+  useEffect(() => {
+    setWaveKey((k) => k + 1);
+  }, [active]);
 
   const scrollTo = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      setIsMobileMenuOpen(false);
-    }
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    setMenuOpen(false);
   };
 
   return (
-    <>
-      {/* Floating Navigation Nodes */}
-      <div className="fixed inset-0 pointer-events-none z-50 hidden lg:block">
-        {navItems.map((item) => (
-          <NavNode 
-            key={item.id} 
-            item={item} 
-            scrollY={scrollY} 
-            onClick={() => scrollTo(item.id)} 
-          />
-        ))}
-      </div>
-
-      {/* Mobile Menu Toggle */}
-      <AnimatePresence>
-        {!isModalOpen && (
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            className="fixed top-6 right-6 z-[60] lg:hidden"
-          >
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-4 bg-paper paper-shadow wobbly-border text-pencil"
-            >
-              {isMobileMenuOpen ? <X /> : <Menu />}
-            </motion.button>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Mobile Menu Overlay */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, x: '100%' }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: '100%' }}
-            className="fixed inset-0 bg-paper z-[55] lg:hidden flex flex-col items-center justify-center gap-8"
-          >
-            {navItems.map((item, i) => (
-              <motion.button
-                key={item.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
-                onClick={() => scrollTo(item.id)}
-                className="text-4xl font-hand hover:text-ink-blue transition-colors"
-              >
-                {item.name}
-              </motion.button>
-            ))}
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-    </>
-  );
-}
-
-function NavNode({ item, scrollY, onClick }: { item: any; scrollY: any; onClick: () => void; key?: string }) {
-  const yOffset = useTransform(scrollY, [0, 2000], [0, (item.id.length % 3 + 1) * 100]);
-  
-  return (
-    <motion.div
-      style={{ y: yOffset }}
-      className={cn("absolute pointer-events-auto", item.pos)}
+    <header
+      className={cn(
+        'fixed inset-x-0 top-0 z-50 transition-all duration-300',
+        scrolled || menuOpen ? 'bg-paper/85 backdrop-blur-md border-b border-pencil/10' : 'bg-transparent border-b border-transparent',
+        isModalOpen && 'opacity-0 pointer-events-none'
+      )}
     >
-      <motion.button
-        whileHover={{ scale: 1.1, rotate: 0 }}
-        whileTap={{ scale: 0.9 }}
-        onClick={onClick}
-        className="group relative"
-      >
-        <SketchyBorder padding="px-6 py-2" className="bg-paper/80 backdrop-blur-sm paper-shadow transition-colors group-hover:text-ink-blue">
-          <span className="font-hand text-lg" style={{ transform: `rotate(${item.rotate}deg)`, display: 'inline-block' }}>
-            {item.name}
-          </span>
-          <Hint text="go to" className="-top-8 left-0 opacity-0 group-hover:opacity-100 transition-opacity" />
-        </SketchyBorder>
-        <Doodle 
-          type="scribble" 
-          className="absolute -bottom-4 -right-4 w-8 h-8 text-ink-blue opacity-0 group-hover:opacity-100 transition-opacity" 
-        />
-      </motion.button>
-    </motion.div>
+      <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6" aria-label="Primary">
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          aria-label="Behlah Katleriwala, back to top"
+          aria-hidden={!brandVisible}
+          tabIndex={brandVisible ? 0 : -1}
+          className={cn(
+            'font-display flex items-center gap-3 text-lg font-bold leading-none tracking-[-0.02em] text-pencil transition-all duration-300',
+            brandVisible ? 'translate-y-0 opacity-100' : 'pointer-events-none -translate-y-1 opacity-0'
+          )}
+        >
+          <Emblem progress={progress} className="h-9 w-9 shrink-0 text-pencil" />
+          <AnimatedWord text="Behlah Katleriwala" mode="trigger" waveKey={waveKey} baseDelay={0.1} />
+        </button>
+
+        <div className="hidden lg:flex items-center gap-1">
+          {navItems.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => scrollTo(item.id)}
+              aria-current={active === item.id ? 'true' : undefined}
+              className={cn(
+                'px-3 py-2 rounded-md text-sm font-medium transition-colors',
+                active === item.id ? 'text-ink-blue' : 'text-pencil/70 hover:text-pencil'
+              )}
+            >
+              {item.name}
+            </button>
+          ))}
+          <a
+            href={RESUME_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="ml-3 inline-flex items-center gap-2 rounded-lg border border-pencil/25 px-4 py-2 text-sm font-semibold text-pencil hover:bg-pencil/5 transition-colors"
+          >
+            <FileText className="w-4 h-4" />
+            View Resume
+          </a>
+          <a
+            href={`mailto:${EMAIL}`}
+            className="ml-2 inline-flex items-center gap-2 rounded-lg bg-ink-blue px-4 py-2 text-sm font-semibold text-paper hover:opacity-90 transition-opacity"
+          >
+            <Mail className="w-4 h-4" />
+            Email
+          </a>
+        </div>
+
+        <button
+          onClick={() => setMenuOpen((o) => !o)}
+          aria-expanded={menuOpen}
+          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          className="lg:hidden p-2 -mr-2 text-pencil"
+        >
+          {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        </button>
+      </nav>
+
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2 }}
+            className="lg:hidden border-t border-pencil/10 px-6 pb-6 pt-2"
+          >
+            <ul className="flex flex-col">
+              {navItems.map((item) => (
+                <li key={item.id}>
+                  <button
+                    onClick={() => scrollTo(item.id)}
+                    className="w-full text-left py-3 text-lg font-medium text-pencil border-b border-pencil/5"
+                  >
+                    {item.name}
+                  </button>
+                </li>
+              ))}
+            </ul>
+            <a
+              href={RESUME_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-ink-blue px-4 min-h-[48px] text-sm font-semibold text-paper"
+            >
+              <FileText className="w-4 h-4" />
+              View Resume
+            </a>
+            <a
+              href={`mailto:${EMAIL}`}
+              className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-lg border border-pencil/25 px-4 min-h-[48px] text-sm font-semibold text-pencil"
+            >
+              <Mail className="w-4 h-4" />
+              Email Me
+            </a>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </header>
   );
 }

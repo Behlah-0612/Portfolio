@@ -1,16 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Kalam:wght@300;400;700&family=Patrick+Hand&family=Gochi+Hand&display=swap');
 @import "tailwindcss";
 
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-hand: "Kalam", cursive;
-  --font-sketch: "Gochi Hand", cursive;
+  --font-display: "Plus Jakarta Sans", "Inter", ui-sans-serif, system-ui, sans-serif;
 
   --color-paper: #f4f1ea;
   --color-pencil: #2a2a2a;
   --color-ink-blue: #3b5998;
   --color-ink-red: #b22222;
   --color-tape: #e6d5ac;
+  --color-surface: #fffdf8;
 
   --color-dark-paper: #1e1c1a;
   --color-dark-paper-elevated: #2a2724;
@@ -28,34 +27,12 @@
 
   body {
     @apply bg-paper text-pencil font-sans antialiased selection:bg-ink-blue/20 leading-relaxed transition-colors duration-500;
-    background-image: 
-      radial-gradient(#00000005 1px, transparent 0),
-      radial-gradient(#00000005 1px, transparent 0);
-    background-size: 20px 20px;
-    background-position: 0 0, 10px 10px;
-    position: relative;
+    overflow-x: clip;
   }
 
-  body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png");
-    opacity: 0.03;
-    pointer-events: none;
-    z-index: 1;
-  }
-
+  /* The site is dark-only: App adds the "dark" class, which remaps the palette. */
   .dark body {
     @apply bg-dark-paper text-dark-pencil selection:bg-dark-ink-blue/20 font-medium;
-    background-image: 
-      radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 0),
-      radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 0);
-  }
-
-  .dark body::before {
-    opacity: 0.05;
-    filter: invert(1);
   }
 
   .dark {
@@ -64,136 +41,221 @@
     --color-ink-blue: var(--color-dark-ink-blue);
     --color-ink-red: var(--color-dark-ink-red);
     --color-tape: var(--color-dark-tape);
-    --paper-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.6);
+    --color-surface: var(--color-dark-paper-elevated);
   }
 
-  /* Custom "Living Sketchbook" Scrollbar */
-  ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background-color: rgba(0, 0, 0, 0.08);
-    background-image: radial-gradient(rgba(0,0,0,0.1) 1px, transparent 0);
-    background-size: 4px 4px;
-    border-left: 1px solid rgba(0, 0, 0, 0.02);
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background-color: #2a2a2a; /* --color-pencil */
-    border-radius: 12px 4px 10px 6px; /* Imperfect hand-drawn edges */
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    transition: background-color 0.2s ease;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background-color: #000000;
-  }
-
-  /* Dark Mode Scrollbar */
-  .dark ::-webkit-scrollbar-track {
-    background-color: rgba(255, 255, 255, 0.08);
-    background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 0);
-    border-left: 1px solid rgba(255, 255, 255, 0.02);
-  }
-
-  .dark ::-webkit-scrollbar-thumb {
-    background-color: #f5f3ef; /* --color-dark-pencil */
-    box-shadow: 0 0 8px rgba(255, 255, 255, 0.15);
-  }
-
-  .dark ::-webkit-scrollbar-thumb:hover {
-    background-color: #ffffff;
-  }
-
-  /* Firefox Support */
-  * {
-    scrollbar-width: thin;
-    scrollbar-color: #2a2a2a rgba(0, 0, 0, 0.08);
-  }
-
-  .dark * {
-    scrollbar-color: #f5f3ef rgba(255, 255, 255, 0.08);
+  section[id] {
+    scroll-margin-top: 4rem;
   }
 
   h1, h2, h3, h4 {
-    @apply font-hand tracking-tight leading-tight font-bold;
+    @apply font-sans tracking-tight leading-tight font-semibold;
   }
 
   p {
     @apply mb-4;
   }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ink-blue);
+    outline-offset: 2px;
+  }
+
+  /* Scrollbars */
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background-color: rgba(120, 120, 120, 0.4); border-radius: 8px; }
+  ::-webkit-scrollbar-thumb:hover { background-color: rgba(120, 120, 120, 0.6); }
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(120, 120, 120, 0.4) transparent;
+  }
 }
 
 @layer utilities {
-  .wobbly-border {
-    border: 2px solid currentColor;
-    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
-  }
-
   .paper-shadow {
-    box-shadow: 4px 4px 0px 0px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 8px 24px -12px rgba(0, 0, 0, 0.25);
   }
 
   .paper-shadow-hover {
-    box-shadow: 8px 8px 0px 0px rgba(0,0,0,0.15);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08), 0 16px 32px -12px rgba(0, 0, 0, 0.35);
   }
 
-  .jitter {
-    animation: jitter 0.3s infinite;
+  .flip-face {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
   }
 
-  @keyframes jitter {
-    0% { transform: translate(0, 0) rotate(0deg); }
-    25% { transform: translate(1px, 1px) rotate(0.5deg); }
-    50% { transform: translate(-1px, -1px) rotate(-0.5deg); }
-    75% { transform: translate(1px, -1px) rotate(0.2deg); }
-    100% { transform: translate(0, 0) rotate(0deg); }
-  }
+  .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+  .custom-scrollbar::-webkit-scrollbar-track { @apply bg-pencil/5 rounded-full; }
+  .custom-scrollbar::-webkit-scrollbar-thumb { @apply bg-pencil/20 rounded-full hover:bg-pencil/40 transition-colors; }
+}
 
-  .marker-underline {
-    position: relative;
-    display: inline-block;
-  }
+/* ---------- Background glows (the dot network lives in BackgroundField) ---------- */
+.bg-glow {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(60px);
+  will-change: transform;
+}
+.bg-glow-a {
+  top: -15%;
+  left: -10%;
+  width: 55vw;
+  height: 55vw;
+  background: radial-gradient(circle, rgba(111, 142, 219, 0.16), transparent 65%);
+  animation: glow-drift-a 38s ease-in-out infinite alternate;
+}
+.bg-glow-b {
+  bottom: -20%;
+  right: -10%;
+  width: 50vw;
+  height: 50vw;
+  background: radial-gradient(circle, rgba(229, 115, 115, 0.09), transparent 65%);
+  animation: glow-drift-b 46s ease-in-out infinite alternate;
+}
+@keyframes glow-drift-a {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(14vw, 10vh, 0) scale(1.15); }
+}
+@keyframes glow-drift-b {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(-12vw, -8vh, 0) scale(1.1); }
+}
 
-  .marker-underline::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 100%;
-    height: 6px;
-    background: currentColor;
-    opacity: 0.3;
-    z-index: -1;
-    border-radius: 100% 10% 100% 10%;
-    transform: rotate(-1deg);
-  }
+/* ---------- Hero entrance: CSS only, so it plays from the server-rendered HTML ---------- */
+.hero-in {
+  animation: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.emblem-in {
+  animation: fade-scale 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.6s both;
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes fade-scale {
+  from { opacity: 0; transform: scale(0.85); }
+  to { opacity: 1; transform: none; }
+}
 
-  .section-padding {
-    @apply py-20 md:py-32 px-6;
-  }
+/* ---------- Name letters: rise in, then a faint wave of light passes through ---------- */
+.name-letter {
+  color: var(--name-base);
+  animation:
+    letter-rise 0.95s cubic-bezier(0.22, 1, 0.36, 1) var(--d) both,
+    name-wave 10s ease-in-out calc(3s + var(--i) * 70ms) infinite;
+}
+@keyframes letter-rise {
+  from { opacity: 0; transform: translateY(115%); filter: blur(6px); }
+  to { opacity: 1; transform: none; filter: none; }
+}
+@keyframes name-wave {
+  0%, 14%, 100% { color: var(--name-base); }
+  7% { color: var(--name-peak); }
+}
 
-  .custom-scrollbar::-webkit-scrollbar {
-    width: 6px;
-  }
-  .custom-scrollbar::-webkit-scrollbar-track {
-    @apply bg-pencil/5 rounded-full;
-  }
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    @apply bg-pencil/20 rounded-full hover:bg-pencil/40 transition-colors;
-  }
-  .dark .custom-scrollbar::-webkit-scrollbar-track {
-    @apply bg-dark-pencil/5;
-  }
-  .dark .custom-scrollbar::-webkit-scrollbar-thumb {
-    @apply bg-dark-pencil/20 hover:bg-dark-pencil/40;
-  }
+/* The nav wordmark plays one wave per section change; two identical keyframes let it restart */
+.name-letter-once {
+  color: var(--name-base);
+  animation-duration: 1.6s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: both;
+  animation-delay: calc(var(--i) * 70ms);
+}
+@keyframes name-wave-a {
+  0%, 100% { color: var(--name-base); }
+  40% { color: var(--name-peak); }
+}
+@keyframes name-wave-b {
+  0%, 100% { color: var(--name-base); }
+  40% { color: var(--name-peak); }
+}
 
-  .speed-boost * {
-    transition-duration: 150ms !important;
-    animation-duration: 150ms !important;
+/* ---------- K monogram ---------- */
+.emblem-stroke-draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: emblem-draw 0.7s cubic-bezier(0.22, 1, 0.36, 1) var(--delay) forwards;
+}
+@keyframes emblem-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+/* The arm waves hello: three quick swings around the joint, then settles */
+.emblem-arm {
+  transform-origin: 22px 32px;
+}
+.emblem-arm-wave {
+  animation: arm-wave 1.8s ease-in-out;
+}
+@keyframes arm-wave {
+  0%, 100% { transform: rotate(0deg); }
+  12%, 48%, 84% { transform: rotate(-15deg); }
+  30%, 66% { transform: rotate(13deg); }
+}
+
+/* The greeting that pops up when you hover the K: an iMessage-style bubble */
+.emblem-hi {
+  position: absolute;
+  left: calc(100% - 0.5rem);
+  top: -1.9rem;
+  padding: 0.55rem 0.95rem;
+  border-radius: 1.2rem;
+  background: #0a84ff;
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 1.05rem;
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  box-shadow: 0 4px 14px rgba(10, 132, 255, 0.28);
+  pointer-events: none;
+  transform-origin: bottom left;
+  animation: imessage-pop 1.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+/* The curled tail */
+.emblem-hi::after {
+  content: "";
+  position: absolute;
+  left: -5px;
+  bottom: 0;
+  width: 17px;
+  height: 21px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='17' height='21' viewBox='0 0 17 21'%3E%3Cpath fill='%230a84ff' d='M17 21C11 21 5 19 0 21 4 18 5 12 5 8V0h12z'/%3E%3C/svg%3E") no-repeat;
+}
+@keyframes imessage-pop {
+  0% { opacity: 0; transform: scale(0.3); }
+  9% { opacity: 1; transform: scale(1.08); }
+  15%, 84% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: translateY(-3px) scale(0.98); }
+}
+@media (max-width: 640px) {
+  .emblem-hi {
+    left: auto;
+    right: 0.2rem;
+    top: -2.5rem;
   }
 }
 
+/* A slow light sweep across the hero tile */
+.tile-shine {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 38%, rgba(255, 255, 255, 0.16) 50%, transparent 62%);
+  transform: translateX(-130%);
+  animation: tile-shine 9s ease-in-out 3s infinite;
+}
+@keyframes tile-shine {
+  0%, 70% { transform: translateX(-130%); }
+  100% { transform: translateX(130%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

@@ -2,83 +2,68 @@ import { Project } from '../components/ProjectCard';
 
 export const projects: Project[] = [
   {
-    id: 'lidar',
-    title: 'LiDAR Point Cloud Pipeline',
-    description: 'A high-performance processing pipeline for spatial data, converting raw LiDAR pulses into structured 3D point clouds for analysis.',
-    techStack: ['Python', 'C++', 'Open3D', 'NumPy'],
-    problemSolved: 'Streamlined the conversion of massive raw sensor data into actionable spatial models with 40% faster processing time.',
-    githubUrl: 'https://github.com/Behlah-0612/Measuring-CSS-and-OSS-using-Livox-Avia---Highland-Valley-Copper',
-    features: ['Automated CSS/OSS metric computation', 'Point cloud normalization', 'Surface smoothing algorithms'],
-    metrics: ['40%:Faster Processing', '98%:Data Accuracy']
+    id: 'liftsafe',
+    title: 'LiftSafe',
+    description: 'A camera-based coaching app for workplace lifting safety. A worker does a few lifts in front of any camera, gets instant feedback and a safety score, and the employer gets a dated training record.',
+    techStack: ['JavaScript', 'MediaPipe', 'Browser-based'],
+    problemSolved: 'Small businesses rarely have a trainer on hand for safe lifting. LiftSafe coaches movement in the browser, and no video is stored or uploaded.',
+    githubUrl: 'https://github.com/Behlah-0612/liftsafe',
+    liveUrl: 'https://iyassh.github.io/liftsafe/index.html',
+    features: ['Camera-based movement coaching', 'Lift safety score and training record', 'Runs entirely in the browser'],
+    metrics: ['Runner-up:Kamloops 2026 Hackathon', '3:Person Team']
   },
   {
-    id: 'aurora',
-    title: 'Aurora - Music Generation System',
-    description: 'A Flask-based procedural music generation app that creates original audio in real time using algorithmic composition and mood presets.',
-    techStack: ['Flask', 'Python', 'Web Audio', 'Logic'],
-    problemSolved: 'Automated the creation of mood-specific soundtracks, allowing users to generate high-quality audio without musical expertise.',
-    githubUrl: 'https://github.com/Behlah-0612/Aurora---Music-Generator',
-    features: ['Algorithmic composition engine', 'Real-time audio synthesis', 'Dynamic mood-based presets'],
-    metrics: ['100%:Procedural', 'Real-time:Generation']
+    id: 'window-crm',
+    title: 'Door-to-Door Window CRM',
+    description: 'A custom CRM for a door-to-door window cleaning startup in Kamloops, covering the full cycle from knocking on a door to collecting payment.',
+    techStack: ['Next.js', 'React', 'TypeScript'],
+    problemSolved: 'The team needed one place to track canvassing, schedule jobs, and handle sales rep payment collection instead of juggling spreadsheets and texts.',
+    githubUrl: '',
+    privateNote: 'Built for a client, so the code is private.',
+    features: ['Admin view with an area overview', 'Sales rep view for their own sales', 'Technician view for assigned jobs'],
+    metrics: ['June 2026:Started', 'In Testing:Not Yet Shipped']
+  },
+  {
+    id: 'pantrychef',
+    title: 'PantryChef',
+    description: 'A mobile-first app that turns a household pantry into recipes, a cost dashboard, and a conversational personal chef. Built for the OpenAI Build Week hackathon.',
+    techStack: ['Next.js', 'TypeScript', 'Supabase', 'OpenAI API'],
+    problemSolved: 'The daily question of what to cook. Snap a receipt, and PantryChef works out what you have and suggests dishes at a reasonable cost.',
+    githubUrl: 'https://github.com/Behlah-0612/openAI-build-week-Hackathon',
+    features: ['Receipt photo parsing', 'Recipe suggestions with cost and nutrition', 'Per-user data protected with row-level security'],
+    metrics: ['Hackathon:OpenAI Build Week', 'Full Stack:Next.js and Supabase']
+  },
+  {
+    id: 'lidar',
+    title: 'LiDAR Crusher Gap Measurement',
+    description: 'My capstone project with Highland Valley Copper (Teck). A Python toolkit that turns raw Livox Avia LiDAR scans of a gyratory crusher into closed side and open side setting measurements.',
+    techStack: ['Python', 'NumPy', 'Pandas', 'Open3D', 'SciPy', 'Plotly'],
+    problemSolved: 'Measuring crusher gap settings by hand is slow and risky. This pipeline builds a surface from the scan, finds the mantle and the wall, and measures the minimum and maximum gap automatically.',
+    githubUrl: 'https://github.com/Behlah-0612/Measuring-CSS-and-OSS-using-Livox-Avia---Highland-Valley-Copper',
+    features: ['Point cloud cleaning and normalization', 'Mantle and wall detection using return angle and gradient', 'Batch runs with per-scan Plotly views'],
+    metrics: ['Capstone:TRU Computing Science', 'Teck:Industry Partner']
   },
   {
     id: 'iot-health',
-    title: 'IoT Health Monitoring System',
-    description: 'Real-time health tracking system using distributed sensors to monitor vitals and provide passive intelligence for risk detection.',
-    techStack: ['React', 'Node.js', 'Firebase', 'MQTT'],
-    problemSolved: 'Enabled continuous, non-invasive monitoring for elderly patients, reducing emergency response time through automated alerts.',
+    title: 'Smart Health Monitoring Chair',
+    description: 'A senior-focused chair with a smart armrest that passively reads vital signs. First-author publication in Gerontechnology.',
+    techStack: ['Arduino', 'Python', 'Firebase', 'IoT Sensors'],
+    problemSolved: 'Vital sign checks usually need a deliberate action. The armrest collects heart rate and temperature while someone simply sits, and sends it to a cloud dashboard.',
     githubUrl: 'https://github.com/Behlah-0612/Smart-Health-Chair---Wireless-Monitoring-Prototype',
-    features: ['Real-time vital tracking', 'ML-based risk assessment', 'Automated emergency alerts'],
-    metrics: ['25%:Lower Latency', '24/7:Monitoring']
+    liveUrl: 'https://doi.org/10.4017/gt.2026.25.2.1516.3',
+    liveLabel: 'Read the Paper',
+    features: ['Heart rate, temperature and ECG sensing', 'Arduino MKR WiFi 1010 and Uno in the armrest', 'Python bridge syncing data to Firebase'],
+    metrics: ['Published:Gerontechnology', 'First:Author']
   },
   {
     id: 'procedural-gen',
-    title: 'Procedural Generation System',
-    description: 'A deterministic world-building engine that generates complex, navigable environments based on seed-based logic.',
-    techStack: ['Java', 'Processing', 'Algorithms'],
-    problemSolved: 'Created infinite, unique, yet reproducible game environments without manual asset creation, ensuring consistent pathfinding.',
+    title: 'Madnopoly Board Generator',
+    description: 'A hybrid digital and physical Monopoly-style game. It generates one continuous board path on a grid, assigns tiles with seeded randomness, and exports the board as JSON to drive a real-world game board.',
+    techStack: ['JavaScript', 'Algorithms', 'Procedural Generation'],
+    problemSolved: 'Every board needs to be a valid closed loop and still be reproducible, so a friend group can replay or share any board from its seed.',
     githubUrl: 'https://github.com/Behlah-0612/Madnopoly-Board-Generator',
-    features: ['Seed-based reproducibility', 'Infinite world expansion', 'A* Pathfinding integration'],
-    metrics: ['100%:Reproducible', '0:Manual Assets']
-  },
-  {
-    id: 'chatgpt-ui',
-    title: 'ChatGPT-style Interface',
-    description: 'A polished, high-performance AI chat interface optimized for speed and natural interaction flow.',
-    techStack: ['React', 'Framer Motion', 'OpenAI API'],
-    problemSolved: 'Improved user engagement by optimizing message streaming and reducing perceived latency in AI responses.',
-    githubUrl: 'https://github.com/Behlah-0612/ChatBot-GPT',
-    features: ['Optimized message streaming', 'Context-aware responses', 'Fluid UI animations'],
-    metrics: ['30%:Higher Engagement', '50ms:Response Start']
-  },
-  {
-    id: 'android-app',
-    title: 'Android Calendar Application',
-    description: 'A robust mobile calendar application designed for efficient scheduling and task management, developed as a core project for a University Android Development course.',
-    techStack: ['Java', 'Android SDK', 'SQLite'],
-    problemSolved: 'Addressed the need for a simplified, student-focused scheduling tool that integrates deadlines and personal events in a clean, intuitive interface.',
-    githubUrl: 'https://github.com/Behlah-0612/To_Do_App',
-    features: ['Dynamic event scheduling', 'Customizable reminders', 'Local data persistence with SQLite'],
-    metrics: ['Grade: A+', '100%: Course Requirement']
-  },
-  {
-    id: 'wordle-c',
-    title: 'Wordle Clone (C)',
-    description: 'A low-level implementation of the popular word game, focusing on efficient memory management and logic validation.',
-    techStack: ['C', 'Standard Library'],
-    problemSolved: 'Demonstrated deep understanding of memory allocation and string manipulation in a resource-constrained environment.',
-    githubUrl: 'https://github.com/Behlah-0612/Wordle',
-    features: ['Manual memory management', 'Dictionary validation', 'Terminal-based UI'],
-    metrics: ['<1MB:Memory Usage', 'O(1):Lookup Time']
-  },
-  {
-    id: 'inventory-system',
-    title: 'Inventory Management System',
-    description: 'A robust system for tracking assets and stock levels with automated reporting and data visualization.',
-    techStack: ['Python', 'Pandas', 'SQLite'],
-    problemSolved: 'Eliminated manual tracking errors and provided real-time stock visibility for a small-scale operation.',
-    githubUrl: 'https://github.com/Behlah-0612/Inventory-Management-System',
-    features: ['Automated reporting', 'Real-time stock visibility', 'Data visualization'],
-    metrics: ['95%:Error Reduction', '100%:Stock Accuracy']
+    liveUrl: 'https://madnopoly-board-generator.netlify.app',
+    features: ['Seed-based reproducible boards', 'Closed-loop grid path generation', 'JSON export for a physical board'],
+    metrics: ['Live:On Netlify', 'Seeded:Reproducible']
   }
 ];

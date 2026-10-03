@@ -1,101 +1,85 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { Github, Linkedin, Mail, ArrowRight, Sparkles } from 'lucide-react';
-import { SketchyBorder, HandDrawnArrow, Doodle, Hint, FlowArrow } from '../components/Sketchy';
+import { ArrowRight, FileText, Github, Linkedin, Mail } from 'lucide-react';
+import { AnimatedWord, Emblem } from '../components/BrandMark';
+import { EMAIL, GITHUB_URL, LINKEDIN_URL, RESUME_URL } from '../data/links';
+
+const socials = [
+  { icon: Github, href: GITHUB_URL, label: 'GitHub' },
+  { icon: Linkedin, href: LINKEDIN_URL, label: 'LinkedIn' },
+  { icon: Mail, href: `mailto:${EMAIL}`, label: 'Email' },
+];
 
 export function Hero() {
-  const [isScrolling, setIsScrolling] = useState(false);
-
-  const socials = [
-    { icon: Github, href: "https://github.com/Behlah-0612", label: "GitHub" },
-    { icon: Linkedin, href: "https://linkedin.com/in/behlah-katleriwala", label: "LinkedIn" },
-    { icon: Mail, href: "mailto:bkatleriwala@gmail.com", label: "Email" }
-  ];
-
-  useEffect(() => {
-    let timeout: NodeJS.Timeout;
-    const handleScroll = () => {
-      setIsScrolling(true);
-      clearTimeout(timeout);
-      timeout = setTimeout(() => setIsScrolling(false), 150);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center pt-20 overflow-hidden px-6">
-      {/* Background Doodles */}
-      <Doodle type="star" interactive className="absolute top-40 left-[10%] text-ink-blue/40 rotate-12 hidden md:block" />
-      <Doodle type="circle" interactive className="absolute bottom-40 right-[15%] text-ink-red/40 -rotate-12 hidden md:block" />
-      <Doodle type="scribble" interactive className="absolute top-1/2 left-[5%] text-pencil/20 w-32 h-32 hidden md:block" />
+    <section className="relative flex min-h-screen flex-col items-center justify-center px-6 pb-16 pt-24">
+      {/* The entrance is CSS-driven (see .hero-in), so it plays from the server-rendered HTML. */}
+      <div className="hero-in mx-auto max-w-5xl text-center">
+        <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-pencil/15 bg-surface px-4 py-1.5 text-sm font-medium text-pencil/80">
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+          </span>
+          Open to software developer roles
+        </div>
 
-      <div className="max-w-4xl mx-auto text-center relative z-10">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          <div className="inline-flex items-center gap-2 px-4 py-1 bg-ink-blue/20 rounded-full text-ink-blue font-sketch text-sm md:text-base mb-8 rotate-1 border border-ink-blue/40">
-            <Sparkles className="w-4 h-4" />
-            <span>Storyboarding the Future</span>
+        {/* Brand lockup: first name in heavy type, with the K monogram as its final letter */}
+        <div className="relative mb-6">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute left-1/2 top-1/2 h-[150%] w-[115%] -translate-x-1/2 -translate-y-1/2 bg-[radial-gradient(closest-side,rgba(111,142,219,0.22),transparent)]"
+          />
+          <div className="font-display relative flex items-center justify-center gap-[0.1em] text-[3.75rem] font-extrabold leading-[0.9] tracking-[-0.045em] sm:text-8xl md:text-[9rem] lg:text-[11rem]">
+            <h1 aria-label="Behlah Katleriwala" className="m-0">
+              <AnimatedWord text="Behlah" baseDelay={0.2} base="#ffffff" peak="#8fa9ee" />
+            </h1>
+            <span className="emblem-in inline-flex">
+              <Emblem
+                draw
+                interactive
+                greet
+                className="h-[0.74em] w-[0.74em] text-white drop-shadow-[0_12px_32px_rgba(111,142,219,0.35)]"
+              />
+            </span>
           </div>
-          
-          <h1 className="text-5xl md:text-8xl font-bold mb-6 leading-tight tracking-tight">
-            Behlah <span className="text-ink-blue marker-underline">Katleriwala</span>
-          </h1>
-          
-          <p className="text-lg md:text-2xl text-pencil/80 max-w-2xl mx-auto mb-10 font-sans leading-relaxed">
-            A systems-driven developer who turns complex logic into <span className="font-hand text-ink-red font-bold">living sketches</span>.
-          </p>
+        </div>
 
-          <div className="flex flex-col md:flex-row justify-center items-center gap-6 mb-16 relative">
-            <Hint text="start here" className="-top-10 left-1/2 -translate-x-1/2 md:left-1/4 md:translate-x-0" />
-            <motion.button
-              whileHover={{ scale: 1.05, rotate: -1 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => document.getElementById('intro')?.scrollIntoView({ behavior: 'smooth' })}
-              className="w-full md:w-auto px-8 py-4 bg-ink-blue text-white rounded-lg font-hand text-xl paper-shadow flex items-center justify-center gap-2 min-h-[48px] border-2 border-ink-blue/60 hover:bg-ink-blue/90 dark:bg-dark-ink-blue dark:hover:bg-dark-ink-blue/90"
+        <p className="mb-3 text-xs font-semibold uppercase tracking-[0.3em] text-ink-blue md:text-sm">
+          Behlah Katleriwala · Software Developer
+        </p>
+        <p className="mx-auto mb-10 max-w-2xl text-base text-pencil/60 md:text-lg">
+          BSc Computing Science, Thompson Rivers University · Kamloops, BC
+        </p>
+
+        <div className="mb-12 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
+          <button
+            onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+            className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-lg bg-ink-blue px-7 font-semibold text-paper transition-opacity hover:opacity-90"
+          >
+            See My Work <ArrowRight className="h-5 w-5" />
+          </button>
+          <a
+            href={RESUME_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-lg border border-pencil/25 px-7 font-semibold text-pencil transition-colors hover:bg-pencil/5"
+          >
+            View Resume <FileText className="h-5 w-5" />
+          </a>
+        </div>
+
+        <div className="flex justify-center gap-3">
+          {socials.map((social) => (
+            <a
+              key={social.label}
+              href={social.href}
+              {...(social.href.startsWith('mailto:') ? {} : { target: '_blank', rel: 'noopener noreferrer' })}
+              aria-label={social.label}
+              className="rounded-full border border-pencil/15 p-3 text-pencil/70 transition-colors hover:border-ink-blue/50 hover:text-ink-blue"
             >
-              View Storyboard <ArrowRight className="w-5 h-5" />
-            </motion.button>
-            
-            <motion.button
-              whileHover={{ scale: 1.05, rotate: 1 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-              className="w-full md:w-auto px-8 py-4 border-2 border-ink-red bg-ink-red/10 text-ink-red rounded-lg font-hand text-xl paper-shadow flex items-center justify-center gap-2 min-h-[48px] hover:bg-ink-red/20 dark:border-dark-ink-red dark:bg-dark-ink-red/10 dark:text-dark-ink-red dark:hover:bg-dark-ink-red/20"
-            >
-              Let's Sketch <Mail className="w-5 h-5" />
-            </motion.button>
-          </div>
-
-          <div className="flex justify-center gap-8">
-            {socials.map((social, i) => {
-              const isMailto = social.href.startsWith('mailto:');
-              return (
-                <motion.a
-                  key={i}
-                  href={social.href}
-                  {...(isMailto
-                    ? {}
-                    : { target: '_blank', rel: 'noopener noreferrer' })}
-                  whileHover={{ y: -5, rotate: i % 2 === 0 ? 10 : -10 }}
-                  className="p-3 bg-tape/80 wobbly-border text-pencil hover:text-ink-blue hover:bg-ink-blue/20 transition-colors flex items-center gap-2 dark:bg-dark-paper-elevated dark:text-dark-pencil dark:hover:text-dark-ink-blue dark:hover:bg-dark-ink-blue/10 border-2 border-tape/60 dark:border-dark-paper/40"
-                  aria-label={social.label}
-                >
-                  <social.icon className="w-6 h-6" />
-                </motion.a>
-              );
-            })}
-          </div>
-        </motion.div>
+              <social.icon className="h-5 w-5" />
+            </a>
+          ))}
+        </div>
       </div>
-
-
-      {/* Flow Arrow to About */}
-      <FlowArrow className="bottom-20 left-1/2 -translate-x-1/2 hidden md:block" rotate={90} />
     </section>
   );
 }

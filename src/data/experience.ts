@@ -1,14 +1,41 @@
 export const experience = [
   {
-    category: 'Real-Time Operations',
-    role: 'Guest Services Agent',
-    company: 'Prestige, PHI',
-    description: 'Managed high-pressure guest interactions and real-time problem solving in a luxury hospitality environment.',
-    takeaway: 'Mastered the art of maintaining system stability under high human concurrency.',
+    category: 'Independent Contract',
+    role: 'CRM Developer',
+    company: 'Door-to-Door Window Cleaning Startup, Kamloops',
+    period: 'June 2026 to Present',
+    description: 'Designing and building a CRM that covers the full door-knock-to-sale cycle for a local window cleaning sales team.',
+    takeaway: 'Software for a real team is judged by whether the crew actually uses it.',
     details: {
-      did: "Handled front-facing guest relations, managed reservations, and resolved complex logistical issues in real-time.",
-      learned: "The critical importance of empathy and clear communication when managing high-stress human systems.",
-      matters: "This role built the foundation for my ability to handle high-concurrency environments with poise."
+      did: "Building a Next.js CRM with separate views for admins, sales reps and technicians. It covers canvassing, job scheduling and payment collection, and is currently in testing and debugging before the team starts using it.",
+      learned: "Role-based design forces you to ask what each person needs to see at each moment, not just what data exists.",
+      matters: "This is the closest thing I have to shipping for real users, and it is where my hospitality background in cash handling and reconciliation meets my development work."
+    }
+  },
+  {
+    category: 'Startup Development',
+    role: 'Software and UI Developer (Volunteer)',
+    company: 'Two Early-Stage AI Startups (NDA)',
+    period: 'Nov 2025 to May 2026',
+    description: 'Designed and built product UI and backend pieces for two early-stage AI startups. Both engagements have since wound down.',
+    takeaway: 'Early-stage teams move fast, so I learned to design, build and document in the same week.',
+    details: {
+      did: "Designed wireframes and layouts and coded in React and Node, with backend work in Supabase, MongoDB and SQL. On the other project I built an end-to-end system for teachers to grade student assignments, including an AI layer that auto-grades submissions for teacher review and release. I also wrote user flows and SRS documentation and moved wireframes from FigJam into Figma Make.",
+      learned: "How to turn a loose product idea into user flows, a database and a working interface without waiting for perfect requirements.",
+      matters: "It gave me hands-on experience with AI features that keep a human in the loop, such as grading that a teacher reviews before it is released."
+    }
+  },
+  {
+    category: 'Real-Time Operations',
+    role: 'Guest Services Trainer',
+    company: 'Prestige Hotels & Resorts, Kamloops',
+    period: 'Oct 2022 to Present',
+    description: 'Started as a guest services agent and now train and audit front-desk staff while handling guest operations, cash handling and some IT tasks.',
+    takeaway: 'Mastered the art of keeping things stable when many people need something at once.',
+    details: {
+      did: "Resolve guest needs end to end, train new front-desk staff, audit their work, handle cash and reconciliation, and take care of small IT tasks around the property.",
+      learned: "Clear communication and empathy matter most when a system, human or technical, is under stress.",
+      matters: "Training others made me better at explaining technical ideas simply, and the audit work built my attention to detail."
     }
   },
   {
@@ -24,6 +51,19 @@ export const experience = [
     }
   },
   {
+    category: 'Leadership',
+    role: 'Board Member, Social Media, Events and Marketing Head',
+    company: 'TRUSU Cybersecurity Club',
+    period: 'Sept 2024 to Dec 2025',
+    description: 'Ran events, outreach and social media for the student cybersecurity club at Thompson Rivers University.',
+    takeaway: 'Fostered a community of systems-thinkers focused on security and ethics.',
+    details: {
+      did: "Organized technical workshops and events, brought in industry professionals, and led the club's marketing and social media.",
+      learned: "Leadership is about giving people a reason to show up and something worth taking away.",
+      matters: "It taught me to communicate security topics to people at very different skill levels."
+    }
+  },
+  {
     category: 'Sales',
     role: 'Sales Representative',
     company: 'Legacy Marketing',
@@ -32,7 +72,7 @@ export const experience = [
     details: {
       did: "Conducted direct outreach, managed a sales pipeline, and closed deals through persuasive communication.",
       learned: "How to read social cues and adapt technical explanations for diverse audiences.",
-      matters: "Refined the 'human interface' skills necessary for translating complex ideas into value."
+      matters: "It is also why the door-to-door CRM I am building now feels familiar from the sales side."
     }
   },
   {
@@ -46,58 +86,5 @@ export const experience = [
       learned: "Logistics is the backbone of any functional system, whether physical or digital.",
       matters: "Gave me a ground-level view of how supply chains and inventory systems operate."
     }
-  },
-  {
-    category: 'Leadership',
-    role: 'Board Member',
-    company: 'TRUSU Cybersecurity Club',
-    description: 'Organized workshops and events focused on digital security and systems protection.',
-    takeaway: 'Fostered a community of systems-thinkers focused on security and ethics.',
-    details: {
-      did: "Led club initiatives, organized technical workshops, and collaborated with industry professionals.",
-      learned: "Leadership is about empowering others to think critically about the systems they build.",
-      matters: "Built a community focused on the ethical and secure advancement of technology."
-    }
   }
 ];
-
-export interface SkillDetail {
-  name: string;
-  category: string;
-  where: string;
-  why: string;
-  usage: string;
-  summary: string;
-  projectId?: string; // Link to a project in projects.ts
-}
-
-export const skills: Record<string, SkillDetail[]> = {
-  programming: [
-    { name: 'Python', category: 'Programming', where: 'LiDAR Pipeline, IoT System', usage: 'Implemented high-performance data processing, automation, and machine learning workflows.', why: 'Crucial for handling large datasets and complex algorithmic computations efficiently.', summary: 'The backbone of my data and automation logic.', projectId: 'lidar' },
-    { name: 'Java', category: 'Programming', where: 'University Coursework, Enterprise Dev', usage: 'Developed scalable backend applications with strong object-oriented design patterns.', why: 'Provides a solid foundation for robust, type-safe systemic architecture.', summary: 'Strong foundation in OOP and backend logic.', projectId: 'procedural-gen' },
-    { name: 'JavaScript', category: 'Programming', where: 'Web Applications, AI Interfaces', usage: 'Created dynamic, responsive frontend experiences and complex interactive modules.', why: 'Essential for building the modern, interactive web interfaces users expect today.', summary: 'Powering interaction and frontend logic.', projectId: 'chatgpt-ui' },
-    { name: 'TypeScript', category: 'Programming', where: 'Modern Web Apps', usage: 'Implemented type-safe frontend and backend logic to reduce bugs and improve maintainability.', why: 'Standard for professional-grade web development and scalable systems.', summary: 'Type-safe development for complex apps.' },
-    { name: 'C/C++', category: 'Systems', where: 'Wordle Engine, Algorithms', usage: 'Optimized low-level memory management and high-performance algorithmic logic.', why: 'Ensures software executes with maximum efficiency at the hardware layer.', summary: 'Low-level control and performance optimization.', projectId: 'wordle-c' },
-    { name: 'SQL', category: 'Database', where: 'Inventory systems, Backend projects', usage: 'Designed relational schemas and optimized complex queries for data retrieval and reporting.', why: 'The standard for reliable, structured data management in production environments.', summary: 'Relational database architecture & querying.', projectId: 'inventory-system' }
-  ],
-  frameworks: [
-    { name: 'React', category: 'Frontend', where: 'Portfolio, Real-time Dashboards', usage: 'Built complex component-based UIs with advanced state management and fluid animations.', why: 'Allows for the creation of scalable, maintainable, and high-performance user interfaces.', summary: 'Dynamic UI component architecture.', projectId: 'iot-health' },
-    { name: 'Next.js', category: 'Full-stack', where: 'Modern Web Platforms', usage: 'Leveraged server-side rendering and static generation for SEO-friendly, fast web apps.', why: 'The leading framework for production-ready React applications.', summary: 'Server-side rendering & optimized performance.' },
-    { name: 'Node.js', category: 'Backend', where: 'AI Chat Systems, APIs', usage: 'Developed event-driven server-side applications and efficient RESTful APIs.', why: 'Ensures fast, non-blocking backend operations ideal for data-intensive apps.', summary: 'Scalable server-side execution.', projectId: 'chatgpt-ui' },
-    { name: 'Express', category: 'Backend', where: 'Middleware, REST Service', usage: 'Built robust routing and request handling for backend services.', why: 'Minimalist and flexible framework for Node.js API development.', summary: 'Standard Node.js web framework.' },
-    { name: 'Firebase', category: 'Backend/Cloud', where: 'Android App, Contact Forms', usage: 'Integrated real-time databases, authentication, and cloud hosting for rapid scaling.', why: 'Provides a robust, serverless infrastructure for modern application needs.', summary: 'Rapid serverless deployment & syncing.', projectId: 'android-app' }
-  ],
-  systemsArchitecture: [
-    { name: 'System Design', category: 'Engineering', where: 'IoT & LiDAR Projects', usage: 'Architected end-to-end solutions combining sensors, data pipelines, and user interfaces.', why: 'Ensures all components work in harmony to solve a unified real-world problem.', summary: 'Blueprinting integrated technologies.', projectId: 'iot-health' },
-    { name: 'REST APIs', category: 'Integration', where: 'Cross-platform Data Sync', usage: 'Designed and consumed standardized APIs to enable seamless communication between services.', why: 'The protocol that connects the modern internet and fragmented systems.', summary: 'The bridge for interconnected systems.', projectId: 'chatgpt-ui' },
-    { name: 'Data Pipelines', category: 'Engineering', where: 'Real-time Vital Tracking', usage: 'Architected automated flows that ingest, process, and present data with minimal delay.', why: 'Transforming data into real-time action requires robust and reliable pipelines.', summary: 'Automating the flow of information.', projectId: 'iot-health' },
-    { name: 'Auth & Security', category: 'Backend', where: 'User Systems', usage: 'Implemented JWT, OAuth, and secure session management principles.', why: 'Non-negotiable for protecting user trust and system integrity.', summary: 'Securing digital entry points.' }
-  ],
-  tools: [
-    { name: 'Git/GitHub', category: 'Collaboration', where: 'All Engineering Work', usage: 'Managed complex codeversions and collaborated using branches, PRs, and team workflows.', why: 'The fundamental standard for collaborative software development and deployment.', summary: 'Standard for collaboration & versioning.' },
-    { name: 'Docker', category: 'DevOps', where: 'Containerized Services', usage: 'Packaged applications into portable containers for consistent deployment across environments.', why: 'Eliminates "works on my machine" issues and streamlines the CI/CD pipeline.', summary: 'Containerization and environment parity.' },
-    { name: 'CI/CD', category: 'DevOps', where: 'Automated Deployments', usage: 'Implemented automated testing and deployment workflows to ensure code quality.', why: 'Increases deployment frequency and prevents regressions in production.', summary: 'Automating the delivery pipeline.' },
-    { name: 'Figma', category: 'UI/UX Design', where: 'Portfolio & App Design', usage: 'Visualized user flows and crafted UI blueprints before high-fidelity implementation.', why: 'Bridging the gap between conceptual design and full-stack development.', summary: 'Architecting visual user experiences.' },
-    { name: 'Tailwind CSS', category: 'UI', where: 'Frontend Projects', usage: 'Rapidly styled responsive and modern layouts using utility-first principles.', why: 'Dramatically faster development cycle and consistent design tokens.', summary: 'Utility-first rapid styling.' }
-  ]
-};
